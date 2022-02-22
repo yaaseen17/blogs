@@ -11,4 +11,5 @@ db.once("open", () => console.log("Connected to Database"));
 
 app.use(express.json());
 app.use("/subscribers", subscribersRouter);
-app.listen(5000, () => console.log(" Server started"));
+const port = process.env.PORT || 5000;
+app.listen(`${port}`, () => console.log(" Server started"));
