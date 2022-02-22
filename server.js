@@ -1,4 +1,4 @@
-require("dotenv").config();
+// require("dotenv").config();
 
 const express = require("express");
 const app = express();
@@ -11,5 +11,5 @@ db.once("open", () => console.log("Connected to Database"));
 
 app.use(express.json());
 app.use("/subscribers", subscribersRouter);
-const port = process.env.PORT || 5000;
-app.listen(`${port}`, () => console.log(" Server started"));
+
+app.listen(process.env.PORT || 5000, () => console.log(" Server started"));
