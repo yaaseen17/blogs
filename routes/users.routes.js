@@ -16,23 +16,27 @@ router.get("/:id", getUser, (req, res) => {
   res.json(res.user);
 });
 
-router.post("/signup", async (req, res) => {
-  try {
-    const salt = await bcrypt.genSalt();
-    const hashedPassword = await bcrypt.hash(req.body.password, salt);
-    const user = new User({
-      name: req.body.name,
-      email: req.body.email,
-      password: hashedPassword,
-    });
-    const newUser = await user.save();
-    res.status(201).json(newUser);
-    console.log(salt);
-    console.log(hashedPassword);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
+router.post(
+  "/signup",
+  [checkDuplicateName, checkDuplicateEmail],
+  async (req, res) => {
+    try {
+      const salt = await bcrypt.genSalt();
+      const hashedPassword = await bcrypt.hash(req.body.password, salt);
+      const user = new User({
+        name: req.body.name,
+        email: req.body.email,
+        password: hashedPassword,
+      });
+      const newUser = await user.save();
+      res.status(201).json(newUser);
+      console.log(salt);
+      console.log(hashedPassword);
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+    }
   }
-});
+);
 router.post("/signin", async (req, res) => {
   try {
     User.findOne({ name: req.body.name }, (err, person) => {
@@ -111,6 +115,31 @@ async function getUser(req, res, next) {
   }
 
   res.user = user;
+  next();
+}
+async function checkDuplicateName(req, res, next) {
+  let user;
+  try {
+    user = await User.findOne({ name: req.body.name });
+    if (user) {
+      return res.status(404).send({ message: "User already exist." });
+    }
+  } catch (err) {
+    return res.status(400).json({ message: err.message });
+  }
+  next();
+}
+
+async function checkDuplicateEmail(req, res, next) {
+  let email;
+  try {
+    email = await User.findOne({ email: req.body.email });
+    if (email) {
+      return res.status(404).send({ message: "Email already exist." });
+    }
+  } catch (err) {
+    return res.status(400).json({ message: err.message });
+  }
   next();
 }
 module.exports = router;

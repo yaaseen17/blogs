@@ -10,7 +10,7 @@ POST http://localhost:5000/users/signup
 Content-Type: application/json
 
 {
-    "name":"yaaseena",
+    "name":"yaaseener",
     "email":"yaasendav@gmail.com",
     "password":"madshit"
 }
