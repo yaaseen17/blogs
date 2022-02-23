@@ -1,0 +1,16 @@
+POST    http://localhost:5000/users/signin
+Content-Type: application/json
+
+{
+    "name":"yaaseena",
+    "password":"madshit"
+}
+###
+POST http://localhost:5000/users/signup
+Content-Type: application/json
+
+{
+    "name":"yaaseena",
+    "email":"yaasendav@gmail.com",
+    "password":"madshit"
+}
