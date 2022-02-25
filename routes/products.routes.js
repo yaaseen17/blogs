@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Product = require("../models/product");
+const verifyToken = require("../middleware/authJwt");
 // Getting all
 router.get("/", async (req, res) => {
   try {
@@ -15,12 +16,13 @@ router.get("/:id", getProduct, (req, res) => {
   res.send(res.product);
 });
 // Creating one
-router.post("/", async (req, res) => {
+router.post("/", verifyToken, async (req, res) => {
   const product = await Product({
     name: req.body.name,
     description: req.body.description,
     price: req.body.price,
     img: req.body.img,
+    created_by: req.userId,
   });
 
   try {
@@ -31,7 +33,10 @@ router.post("/", async (req, res) => {
   }
 });
 // Updating One
-router.patch("/:id", getProduct, async (req, res) => {
+router.patch("/:id", [getProduct,verifyToken], async (req, res) => {
+  if (res.product.created_by != req.userId) {
+    return res.status(401).send({ message: "Unauthorized!" });
+  }
   if (req.body.name != null) {
     res.product.name = req.body.name;
   }
@@ -52,8 +57,11 @@ router.patch("/:id", getProduct, async (req, res) => {
   }
 });
 // Deleting One
-router.delete("/:id", getProduct, async (req, res) => {
+router.delete("/:id", [getProduct, verifyToken], async (req, res) => {
   try {
+    if (res.product.created_by != req.userId) {
+      return res.status(401).send({ message: "Unauthorized!" });
+    }
     await res.product.remove();
     res.json({ message: "Deleted product" });
   } catch (err) {

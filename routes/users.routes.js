@@ -3,6 +3,8 @@ const router = express.Router();
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const verifyToken = require("../middleware/authJwt");
+const product = require("../models/product");
 router.get("/", async (req, res) => {
   try {
     const users = await User.find();
@@ -10,10 +12,6 @@ router.get("/", async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
-});
-
-router.get("/:id", getUser, (req, res) => {
-  res.json(res.user);
 });
 
 router.post(
@@ -57,7 +55,7 @@ router.post("/signin", async (req, res) => {
           message: "Invalid Password!",
         });
       }
-      let token = jwt.sign({ id: person.id }, process.env.SECRET, {
+      let token = jwt.sign({ id: person.id }, process.env.ACCESSTOKEN, {
         expiresIn: 86400, // 24 hours
       });
       res.status(200).send({
@@ -71,9 +69,12 @@ router.post("/signin", async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 });
-router.patch("/:id", getUser, async (req, res) => {
-  if (req.body.fullname != null) {
-    res.user.fullname = req.body.fullname;
+router.patch("/:id", [getUser, verifyToken], async (req, res) => {
+  if (req.params.id != req.userId) {
+    return res.status(401).send({ message: "Unauthorized!" });
+  }
+  if (req.body.name != null) {
+    res.user.name = req.body.name;
   }
   if (req.body.email != null) {
     res.user.email = req.body.email;
@@ -95,14 +96,22 @@ router.patch("/:id", getUser, async (req, res) => {
   }
 });
 
-router.delete("/:id", getUser, async (req, res) => {
+router.delete("/:id", [getUser, verifyToken], async (req, res) => {
   try {
+    if (req.params.id != req.userId) {
+      return res.status(401).send({ message: "Unauthorized!" });
+    }
     await res.user.remove();
     res.json({ message: "Deleted User" });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
+//cart
+router.get("/cart", [getUser, verifyToken], readCart);
+router.post("/:id/cart", [getUser, verifyToken], addTocart);
+router.delete("/:id/cart", [getUser, verifyToken], deletItem);
+router.patch("/:id/cart", [getUser, verifyToken], editItem);
 async function getUser(req, res, next) {
   let user;
   try {
@@ -129,7 +138,26 @@ async function checkDuplicateName(req, res, next) {
   }
   next();
 }
-
+async function addTocart(req, res, next) {
+  let cart = [];
+  try {
+  } catch {}
+}
+async function readCart(req, res, next) {
+  let cart = [];
+  try {
+  } catch {}
+}
+async function deletItem(req, res, next) {
+  let cart = [];
+  try {
+  } catch {}
+}
+async function editItem(req, res, next) {
+  let cart = [];
+  try {
+  } catch {}
+}
 async function checkDuplicateEmail(req, res, next) {
   let email;
   try {
