@@ -4,7 +4,8 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const productsRouter = require("./routes/products.routes");
-const usersRouter = require("./routes/users.routes")
+const usersRouter = require("./routes/users.routes");
+const cartRouter = require("./routes/cart.routes");
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
 const db = mongoose.connection;
 db.on("error", (error) => console.error(error));
@@ -12,5 +13,6 @@ db.once("open", () => console.log("Connected to Database"));
 
 app.use(express.json());
 app.use("/products", productsRouter);
-app.use("/users", usersRouter)
+app.use("/users", usersRouter);
+app.use("/cart", cartRouter);
 app.listen(process.env.PORT || 5000, () => console.log(" Server started"));

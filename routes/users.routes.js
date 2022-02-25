@@ -107,11 +107,7 @@ router.delete("/:id", [getUser, verifyToken], async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-//cart
-router.get("/cart", [getUser, verifyToken], readCart);
-router.post("/:id/cart", [getUser, verifyToken], addTocart);
-router.delete("/:id/cart", [getUser, verifyToken], deletItem);
-router.patch("/:id/cart", [getUser, verifyToken], editItem);
+
 async function getUser(req, res, next) {
   let user;
   try {
@@ -138,26 +134,7 @@ async function checkDuplicateName(req, res, next) {
   }
   next();
 }
-async function addTocart(req, res, next) {
-  let cart = [];
-  try {
-  } catch {}
-}
-async function readCart(req, res, next) {
-  let cart = [];
-  try {
-  } catch {}
-}
-async function deletItem(req, res, next) {
-  let cart = [];
-  try {
-  } catch {}
-}
-async function editItem(req, res, next) {
-  let cart = [];
-  try {
-  } catch {}
-}
+
 async function checkDuplicateEmail(req, res, next) {
   let email;
   try {

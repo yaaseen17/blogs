@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Product = require("../models/product");
 const verifyToken = require("../middleware/authJwt");
+const getProduct = require("../middleware/finder");
 // Getting all
 router.get("/", async (req, res) => {
   try {
@@ -33,7 +34,7 @@ router.post("/", verifyToken, async (req, res) => {
   }
 });
 // Updating One
-router.patch("/:id", [getProduct,verifyToken], async (req, res) => {
+router.patch("/:id", [getProduct, verifyToken], async (req, res) => {
   if (res.product.created_by != req.userId) {
     return res.status(401).send({ message: "Unauthorized!" });
   }
@@ -69,17 +70,4 @@ router.delete("/:id", [getProduct, verifyToken], async (req, res) => {
   }
 });
 
-async function getProduct(req, res, next) {
-  let product;
-  try {
-    product = await Product.findById(req.params.id);
-    if (product == null) {
-      return res.status(404).json({ message: "cannot find product" });
-    }
-  } catch (err) {
-    return res.status(500).json({ message: err.message });
-  }
-  res.product = product;
-  next();
-}
 module.exports = router;
