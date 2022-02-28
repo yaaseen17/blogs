@@ -1,20 +1,22 @@
-POST    http://localhost:5000/products
+GET     http://localhost:5000/products
 Content-Type: application/json
 
-{
- "name":"yaaseensed",
- "description":"something",
- "price":"40",
- "img": "img",
+# {
+#  "name":"yaaseensed",
+#  "description":"something",
+#  "price":"40",
+#  "img": "img",
  
-}
+# }
 
 ###
 
-PATCH  http://localhost:5000/products/621601443908e33e4a1764ca
+POST  http://localhost:5000/cart/6218a65b8a2a619940de3d48
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjFjNzViMWYyMzljMTBjYTAwN2M2YjciLCJjYXJ0IjpbeyJfaWQiOiI2MjE4YTY1YjhhMmE2MTk5NDBkZTNkNDgiLCJuYW1lIjoiZmFzdDIiLCJkZXNjcmlwdGlvbiI6InNvbWV0aGluZyIsInByaWNlIjo0MCwiaW1nIjoiaW1nIiwiY3JlYXRlZF9ieSI6IjYyMThhNGVlZGQyZTlmOWI4YWZlMzI5YyIsIl9fdiI6MCwicXR5IjoiMTMifV0sImlhdCI6MTY0NjA0MjYzNywiZXhwIjoxNjQ2MTI5MDM3fQ.yRNYXX_-ihUGY-ssZkIPLKBBwlnktScaMQN5Ghf3RZA
+
 {
-    "name":"change"
+    "qty":"12"
 }
 ###
 DELETE   http://localhost:5000/products

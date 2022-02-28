@@ -1,34 +1,13 @@
-GET    http://localhost:5000/products
-
-
-###
-
-DELETE http://localhost:5000/products/6218912715ae6f0f34dc0e2a
+GET  http://localhost:5000/products
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMTg5MDk3MTVhZTZmMGYzNGRjMGUyNiIsImlhdCI6MTY0NTc3NzEzMiwiZXhwIjoxNjQ1ODYzNTMyfQ.fhsnnsYAHgZxEObDf_ky4awTV87-kizhT1ZoovQFwos
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjFjNzViMWYyMzljMTBjYTAwN2M2YjciLCJpYXQiOjE2NDYwMzY5MzAsImV4cCI6MTY0NjEyMzMzMH0.ceZ0AKEcN-Rs8JlO5MYDjs5SB5vXGDN3r9YUusMcWNU
 
 
 ###
-POST    http://localhost:5000/users/signup
+POST    http://localhost:5000/users/signin
 Content-Type: application/json
 
 {
-    "name":"yaaseendavidsasa",
-    "email":"waah@gmsil.com",
+    "name":"yaaseendavidsasawe",
     "password":"madshit"
 }
-###
-DELETE  http://localhost:5000/users/62162dbd72e4b35f4dc4ad7f
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMTYyZGJkNzJlNGIzNWY0ZGM0YWQ3ZiIsImlhdCI6MTY0NTc4MTkwMywiZXhwIjoxNjQ1ODY4MzAzfQ.1_eYM4O_HiiOoVueCaTTjh22PtVVGX6qKHgQfLqaoZA
-
-
-###
-PATCH    http://localhost:5000/products/6218a65b8a2a619940de3d48
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMTYyZGJkNzJlNGIzNWY0ZGM0YWQ3ZiIsImlhdCI6MTY0NTc4MTkwMywiZXhwIjoxNjQ1ODY4MzAzfQ.1_eYM4O_HiiOoVueCaTTjh22PtVVGX6qKHgQfLqaoZA
-
-{
-    "name": "fast2"
-}
-###

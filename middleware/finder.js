@@ -1,3 +1,5 @@
+const Product = require("../models/product");
+
 getProduct = async (req, res, next) => {
   let product;
   try {
