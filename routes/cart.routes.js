@@ -42,12 +42,12 @@ router.post("/:id", [verifyToken, getUser], async (req, res) => {
 });
 
 router.put("/:id", [verifyToken, getProduct], async (req, res) => {
-  const user = await User.findById(req.user._id);
-  const inCart = user.cart.some((prod) => prod._id == req.params._id);
+  const user = await User.findById(req.userId);
+  const inCart = user.cart.some((prod) => prod.id == req.params.id);
 
   let updatedUser;
   if (inCart) {
-    const product = user.cart.find((prod) => prod._id == req.params._id);
+    const product = user.cart.find((prod) => prod.id == req.params.id);
     product.qty += req.body.qty;
     updatedUser = await user.save();
   } else {
@@ -75,11 +75,21 @@ router.delete("/", [verifyToken, getUser], async (req, res) => {
   }
 });
 
-router.delete("/:id", [getProduct, verifyToken, getUser], async (req, res) => {
+router.delete("/:id", [verifyToken, getUser], async (req, res) => {
+  let cart = req.cart;
+  cart.forEach((cartitem) => {
+    if (cartitem._id == req.params.id) {
+      cart = cart.filter((cartitems) => cartitems._id != req.params.id);
+    }
+  });
   try {
-    res.product.cart;
-    await res.product.remove();
-    res.json({ message: "Deleted product" });
+    res.user.cart = cart;
+
+    const updated = res.user.save();
+    let token = jwt.sign({ _id: req.userId, cart }, process.env.ACCESSTOKEN, {
+      expiresIn: 86400, // 24 hours
+    });
+    res.json({ message: "Deleted product", updated, token });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

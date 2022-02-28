@@ -1,6 +1,6 @@
-GET  http://localhost:5000/products
+POST   http://localhost:5000/cart/621608f39b0674a596f233b2
 Content-Type: application/json
-Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjFjNzViMWYyMzljMTBjYTAwN2M2YjciLCJpYXQiOjE2NDYwMzY5MzAsImV4cCI6MTY0NjEyMzMzMH0.ceZ0AKEcN-Rs8JlO5MYDjs5SB5vXGDN3r9YUusMcWNU
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjFjNzViMWYyMzljMTBjYTAwN2M2YjciLCJjYXJ0IjpbXSwiaWF0IjoxNjQ2MDU2MTEzLCJleHAiOjE2NDYxNDI1MTN9.4WrmowFr7thUkfHrU7E5UoWZWdvdRc9QTcF3DU7diEw
 
 
 ###
