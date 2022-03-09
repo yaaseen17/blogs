@@ -1,17 +1,17 @@
-const Product = require("../models/product");
+const Blog = require("../models/blogs");
 
-getProduct = async (req, res, next) => {
-  let product;
+getBlog = async (req, res, next) => {
+  let blog;
   try {
-    product = await Product.findById(req.params.id);
-    if (product == null) {
-      return res.status(404).json({ message: "cannot find product" });
+    blog = await blog.findById(req.params.id);
+    if (blog == null) {
+      return res.status(404).json({ message: "blog" });
     }
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
-  res.product = product;
+  res.blog = product;
   next();
 };
 
-module.exports = getProduct;
+module.exports = getBlog;
